@@ -1,49 +1,39 @@
-
 #include <iostream>
+#include <string>
+
 using namespace std;
 
-float calculateInterestRate(string accountType, string accountLevel, float balance) {
-    float rates[][2] = {
-        // Standard
-        {0, 1.2}, {1000, 1.9},
-        // Gold
-        {5000, 2.3}, {1500, 1.7},
-        // Platinum
-        {10000, 2.5}, {0, 0}  // Rate not specified, assume 0
-    };
-
-    int index;
-    if (accountType == "Standard") index = 0;
-    else if (accountType == "Gold") index = 2;
-    else if (accountType == "Platinum") index = 4;
-
-    if (accountLevel == "Personal") {
-        if (balance >= rates[index][0]) return rates[index][1];
-        else return rates[0][1];  // Default to Standard Personal
-    } else {  // Business
-        index++;
-        if (balance >= rates[index][0]) return rates[index][1];
-        else return rates[1][1];  // Default to Standard Business
-    }
-}
-
 int main() {
-    string accountType;
-    string accountLevel;
-    float balance;
+    double balance;
+    string accountType, accountLevel;
+    double interestRate = 0.0;
 
-    cout << "Enter your account type (Standard, Gold, Platinum): ";
-    cin >> accountType;
-
-    cout << "Enter your account level (Personal, Business): ";
-    cin >> accountLevel;
-    
-    cout << "Enter your bank account balance: $";
+    cout << "Enter your bank account balance: ";
     cin >> balance;
+    cout << "Enter account type (Personal/Business): ";
+    cin >> accountType;
+    cout << "Enter account level (Standard/Gold/Platinum): ";
+    cin >> accountLevel;
 
-    float interestRate = calculateInterestRate(accountType, accountLevel, balance);
-    cout << "\nYour interest rate is: " << interestRate << "%" << endl;
+    if (accountType == "Personal") {
+        if (accountLevel == "Standard" && balance >= 0) {
+            interestRate = 1.2;
+        } else if (accountLevel == "Gold" && balance >= 1000) {
+            interestRate = (balance >= 5000) ? 2.3 : 1.9;
+        }
+    } else if (accountType == "Business") {
+        if (accountLevel == "Standard" && balance >= 1500) {
+            interestRate = 1.7;
+        } else if (accountLevel == "Platinum" && balance >= 10000) {
+            interestRate = 2.5;
+        }
+    }
+
+    if (interestRate > 0) {
+        cout << "Your interest rate is: " << interestRate << "%" << endl;
+    } else {
+        cout << "No applicable interest rate found for the given account details, Please recheck and try again." << endl;
+    }
 
     return 0;
 }
-    
