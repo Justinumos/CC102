@@ -2,10 +2,10 @@
 #include <iostream>
 using namespace std;
 
-float calculateInterestRate(float balance, string accountType, string accountLevel) {
+float calculateInterestRate(string accountType, string accountLevel, float balance) {
     float rates[][2] = {
         // Standard
-        {0, 1.9}, {1000, 1.2},
+        {0, 1.2}, {1000, 1.9},
         // Gold
         {5000, 2.3}, {1500, 1.7},
         // Platinum
@@ -28,20 +28,20 @@ float calculateInterestRate(float balance, string accountType, string accountLev
 }
 
 int main() {
-    float balance;
     string accountType;
     string accountLevel;
-
-    cout << "Enter your bank account balance: $";
-    cin >> balance;
+    float balance;
 
     cout << "Enter your account type (Standard, Gold, Platinum): ";
     cin >> accountType;
 
     cout << "Enter your account level (Personal, Business): ";
     cin >> accountLevel;
+    
+    cout << "Enter your bank account balance: $";
+    cin >> balance;
 
-    float interestRate = calculateInterestRate(balance, accountType, accountLevel);
+    float interestRate = calculateInterestRate(accountType, accountLevel, balance);
     cout << "\nYour interest rate is: " << interestRate << "%" << endl;
 
     return 0;
