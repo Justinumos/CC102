@@ -1,7 +1,6 @@
 
 #include <iostream>
 #include <string>
-
 using namespace std;
 
 struct Movie {
@@ -11,19 +10,18 @@ struct Movie {
 };
 
 Movie movies[] = {
-    {"Dragon ball Daima", 0, false},  // G
-    {"Transformers", 13, false},  // PG-13
-    {"Deadpool", 16, true},  // R (requires adult)
-    {"Naturo", 0, false},  // G
-    {"Avengers", 13, false},  // PG-13
-    {"The Exorcise", 18, true},  // R (requires adult)
-    
+    {"Dragon ball Daima", 0, false}, 
+    {"Transformers", 13, false}, 
+    {"Deadpool", 16, true}, 
+    {"Naturo", 0, false}, 
+    {"Avengers", 13, false}, 
+    {"The Exorcise", 18, true}
 };
 
 string determineMovieType(int age, bool withParent) {
     string suitableMovies;
     for (const auto& movie : movies) {
-        if ((movie.minAge <= age && !movie.requiresAdult) ||
+        if ((movie.minAge <= age && !movie.requiresAdult) || 
             (withParent && movie.requiresAdult)) {
             suitableMovies += movie.name + ", ";
         }
@@ -51,6 +49,17 @@ int main() {
     cout << "Is it a matinee? (yes/no): ";
     cin >> input;
     isMatinee = input == "yes";
+
+    cout << "\nAge: " << age << ", With Parent: " << (withParent ? "yes" : "no") << 
+         ", Money: $" << money << ", Matinee: " << (isMatinee ? "yes" : "no") << endl;
+
+    cout << "Is this information correct? (yes/no): ";
+    cin >> input;
+
+    if (input == "no") {
+        cout << "Please re-enter the correct information." << endl;
+        return 1;
+    }
 
     string suitableMovies = determineMovieType(age, withParent);
     float price = isMatinee ? 7.50f : 10.50f;
